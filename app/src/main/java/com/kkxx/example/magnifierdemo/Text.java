@@ -17,12 +17,10 @@ import android.view.MotionEvent;
 public class Text extends AppCompatTextView {
 
     // 放大镜的半径
-    private static final int RADIUS = 100;
+    private static final int RADIUS = 200;
     // 放大倍数
     private static final float FACTOR = 1.1F;
     private int mCurrentX, mCurrentY;
-    private final Path mPath = new Path();
-    private final Matrix matrix = new Matrix();
 
     public Text(Context context) {
         this(context, null);
@@ -34,8 +32,6 @@ public class Text extends AppCompatTextView {
 
     public Text(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mPath.addCircle(RADIUS, RADIUS, RADIUS, Path.Direction.CW);
-        matrix.setScale(FACTOR, FACTOR);
     }
 
     @Override
@@ -49,11 +45,11 @@ public class Text extends AppCompatTextView {
 
         setDrawingCacheEnabled(true);
         buildDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(getDrawingCache(), mCurrentX - RADIUS - (int) getX(),
-                mCurrentY - RADIUS - (int) getY(), RADIUS * 2, RADIUS * 2);
-//        Log.d("Text", "---bitmap---- " + bitmap.getWidth() + "  " + bitmap.getHeight());
-//        Log.d("Text", "---mCurrentX---- " + mCurrentX);
-//        Log.d("Text", "---mCurrentY---- " + mCurrentY);
+        Bitmap bitmap = Bitmap.createBitmap(getDrawingCache(), mCurrentX - RADIUS,
+                mCurrentY - RADIUS, RADIUS * 2, RADIUS * 2);
+        Log.d("Text", "----Text------ " + getWidth() + "  " + getHeight());
+        Log.d("Text", "----Bitmap------ " + getDrawingCache().getWidth() + "  " + getDrawingCache().getHeight());
+        Log.d("Text", "----Event------ " + mCurrentX + "  " + mCurrentY);
         setDrawingCacheEnabled(false);
 
         return bitmap;

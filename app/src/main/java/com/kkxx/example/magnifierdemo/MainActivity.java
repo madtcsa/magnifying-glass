@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     Text textView;
     ImageView imageView;
     PopupWindow popupWindow;
+    CirclePopupWindow circlePopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +31,17 @@ public class MainActivity extends AppCompatActivity {
         popupWindow.setContentView(view);
 //        popupWindow.showAtLocation(textView, Gravity.NO_GRAVITY, 0, 0);
         imageView = view.findViewById(R.id.profile_image);
+        circlePopupWindow = new CirclePopupWindow(this);
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         textView.onTouchEvent(ev);
-        imageView.setImageBitmap(textView.loadBitmapFromView());
-        if (popupWindow.isShowing()) {
-            popupWindow.update((int) ev.getX(), (int) ev.getY(), popupWindow.getWidth(), popupWindow.getHeight());
+        circlePopupWindow.updateImg(textView.loadBitmapFromView());
+        if (circlePopupWindow.isShowing()) {
+            circlePopupWindow.update((int) ev.getX(), (int) ev.getY(), popupWindow.getWidth(), popupWindow.getHeight());
         } else {
-            popupWindow.showAtLocation(textView, Gravity.NO_GRAVITY, (int) ev.getX(), (int) ev.getY());
+            circlePopupWindow.showAtLocation(textView, Gravity.NO_GRAVITY, (int) ev.getX(), (int) ev.getY());
         }
         return super.dispatchTouchEvent(ev);
     }
